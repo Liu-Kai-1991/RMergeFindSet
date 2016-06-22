@@ -1,6 +1,5 @@
-setwd("~/A New Perspective on Director Busyness/")
 library(Rcpp)
-
+setwd("~/MergeFindSet/RMergeFindSet") ## Need to be changed
 CppFile = "MergeFindSet.cpp"
 Sys.setenv("PKG_CXXFLAGS"="-std=c++11")
 Rcpp::sourceCpp(CppFile)
@@ -15,11 +14,3 @@ MFSet = setRefClass("MFSet",
                            ))
 
 newMFSet = function() MFSet$new()
-
-b = newMFSet()                        
-b$insert(3)
-b$insert(4)
-b$insert(5)
-b$getGroup()
-b$combine(4,5)
-b$getGroup()
