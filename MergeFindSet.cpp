@@ -12,16 +12,19 @@ int useAuto() {
     return val;
 }
 
-
+// Tree structure
 class Node
 {
 public:
     Node():Parent(this),rank(0){}
+    
+    // Find the root of current node recursively 
     Node* getParent()
     {
         if (Parent == this) return this;
         else return Parent = Parent->getParent();
     }
+    // Merge two trees
     static void merge(Node* x, Node* y)
     {
         Node* PreX = x->getParent();
@@ -42,6 +45,7 @@ private:
     int rank;
 };
 
+// The merge find set (disjoint-set) class
 class MergeFindSet
 {
 public:
@@ -67,6 +71,7 @@ SEXP MergeFindSet::greet(SEXP x)
     return x; 
 }
 
+// Combine two group
 void MergeFindSet::combine(SEXP x, SEXP y)
 {
     auto NodeX = insert_(x);
@@ -74,6 +79,7 @@ void MergeFindSet::combine(SEXP x, SEXP y)
     Node::merge(NodeX, NodeY);
 }
     
+// Helper function of insert an item
 Node* MergeFindSet::insert_(SEXP x)
 {
     std::string strx = as<std::string>(x);
@@ -87,11 +93,13 @@ Node* MergeFindSet::insert_(SEXP x)
     else return ItemList[strx];
 }
 
+// Insert a single item
 void MergeFindSet::insert(SEXP x)
 {
     insert_(x);
 }
 
+// Get the grouping table
 DataFrame MergeFindSet::getGroup()
 {
     CharacterVector ContainerIndividual;
